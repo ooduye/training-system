@@ -13,9 +13,9 @@ class ActivityController extends Controller
 {
     public function show($id)
     {
-        $skill = Skill::find($id)->with(['activity' => function ($query) {
+        $skill = Skill::where('id', $id)->with(['activities' => function ($query) {
             $query->orderBy('start_date');
-        }, 'activity.activityParticipant.user'])->get();
+        }, 'activities.participants'])->get();
 
         if (!$skill) {
             return response()->json([
@@ -34,8 +34,8 @@ class ActivityController extends Controller
             'skill_id' => 'required|exists:skills,id',
             'title' => 'required',
             'description' => 'required',
-            'startdate' => 'required',
-            'enddate' => 'required|after:startdate',
+            'start_date' => 'required',
+            'end_date' => 'required|after:start_date',
             'participants' => 'required|array',
             'participants.*' => 'required|distinct|exists:users,id',
         ]);
@@ -51,8 +51,8 @@ class ActivityController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'skill_id' => $request->skill_id,
-            'start_date' => $request->startdate,
-            'end_date' => $request->enddate,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
         ]);
 
         $this->addParticipants($request->participants, $activity);

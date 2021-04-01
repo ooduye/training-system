@@ -28,6 +28,7 @@ Route::prefix('v1/')->group(function () {
 
     Route::middleware(['auth.expert'])->group(function () {
         Route::resource('activity', ActivityController::class);
+        Route::get('activities', [ActivityController::class, 'show']);
     });
 
     Route::middleware(['auth.loggedin'])->group(function () {
