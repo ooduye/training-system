@@ -7,6 +7,7 @@ use App\Models\ActivityParticipant;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
@@ -29,14 +30,22 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'skill_id' => 'required',
+        $validator = Validator::make($request->all(), [
+            'skill_id' => 'required|exists:skills,id',
             'title' => 'required',
             'description' => 'required',
             'startdate' => 'required',
-            'enddate' => 'required',
-            'participants' => 'required',
+            'enddate' => 'required|after:startdate',
+            'participants' => 'required|array',
+            'participants.*' => 'required|distinct|exists:users,id',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Data cannot be processed',
+                'error' => $validator->errors(),
+            ], 422);
+        }
 
         $activity = Activity::create([
             'title' => $request->title,

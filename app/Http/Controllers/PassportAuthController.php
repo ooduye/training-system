@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PassportAuthController extends Controller
 {
@@ -16,13 +17,20 @@ class PassportAuthController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:4',
             'username' => 'required:min:2',
-            'profile_id' => 'required'
+            'profile_id' => 'required|exists:profiles,id'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Data cannot be processed',
+                'error' => $validator->errors(),
+            ], 422);
+        }
 
 //        $profile = $request->profile;
 //
