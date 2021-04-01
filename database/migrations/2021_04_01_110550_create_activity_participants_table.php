@@ -15,6 +15,8 @@ class CreateActivityParticipantsTable extends Migration
     {
         Schema::create('activity_participants', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('activity_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

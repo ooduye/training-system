@@ -18,6 +18,8 @@ class Activity extends Model
         'skill_id',
         'title',
         'description',
+        'start_date',
+        'end_date',
     ];
 
     /**
