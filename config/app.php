@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
+        LukeVear\LaravelTransformer\TransformerServiceProvider::class,
 
         /*
          * Application Service Providers...

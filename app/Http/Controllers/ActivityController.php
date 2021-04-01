@@ -6,6 +6,7 @@ use App\Models\Activity;
 use App\Models\ActivityParticipant;
 use App\Models\Skill;
 use App\Models\User;
+use App\Transformers\Skill\ExtendedSkillTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,9 +14,7 @@ class ActivityController extends Controller
 {
     public function show($id)
     {
-        $skill = Skill::where('id', $id)->with(['activities' => function ($query) {
-            $query->orderBy('start_date');
-        }, 'activities.participants'])->get();
+        $skill = Skill::find($id);
 
         if (!$skill) {
             return response()->json([
@@ -24,7 +23,7 @@ class ActivityController extends Controller
         }
 
         return response()->json([
-            'data' => $skill->toArray()
+            'data' => transforms($skill, new ExtendedSkillTransformer())
         ], 200);
     }
 

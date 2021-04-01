@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d7955f5b53e4cdffa1dd728dd7710ef",
+    "content-hash": "9f17193e32169b168482448e5df534be",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2232,6 +2232,48 @@
                 }
             ],
             "time": "2020-12-10T11:35:44+00:00"
+        },
+        {
+            "name": "lukevear/laravel-transformer",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lukevear/laravel-transformer.git",
+                "reference": "cf17ec4e2d1b723d3a89b799863ff781dfa601eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lukevear/laravel-transformer/zipball/cf17ec4e2d1b723d3a89b799863ff781dfa601eb",
+                "reference": "cf17ec4e2d1b723d3a89b799863ff781dfa601eb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.1.0",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LukeVear\\LaravelTransformer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luke Vear",
+                    "homepage": "https://github.com/lukevear"
+                }
+            ],
+            "description": "A simple transformer for Laravel Eloquent models and collections.",
+            "support": {
+                "issues": "https://github.com/lukevear/laravel-transformer/issues",
+                "source": "https://github.com/lukevear/laravel-transformer/tree/develop"
+            },
+            "abandoned": true,
+            "time": "2017-05-17T01:59:04+00:00"
         },
         {
             "name": "monolog/monolog",
