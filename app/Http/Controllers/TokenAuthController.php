@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use phpseclib3\Crypt\Hash;
 
-class PassportAuthController extends Controller
+class TokenAuthController extends Controller
 {
     /**
      * Registration
@@ -74,9 +75,10 @@ class PassportAuthController extends Controller
             'password' => $request->password
         ];
 
-        if (auth()->attempt($data)) {
-            $token = auth()->user()->createToken('User Token')->accessToken;
-            $profileName = auth()->user()->profile->name;
+        $user = User::checkIfLoginValid($data['email'], $data['password']);
+        if (is_object($user) && get_class($user) === 'App\Models\User') {
+            $token = $this->createToken($user);
+            $profileName = $user->profile->name;
             return response()->json(['token' => $token, 'profile' => $profileName], 200);
         } else {
             return response()->json(['message' => 'invalid login'], 401);
@@ -91,10 +93,28 @@ class PassportAuthController extends Controller
     public function logout(Request $request): \Illuminate\Http\JsonResponse
     {
         if (Auth::guard('api')->check()) {
-            auth()->guard('api')->user()->token()->revoke();
+            $user = auth()->guard('api')->user();
+            $user->token = '';
+            $user->save();
             return response()->json(['message' => 'logout success'], 200);
         } else {
             return response()->json(['message' => 'Unauthorized user'], 401);
         }
+    }
+
+    /**
+     * Create the authenticated user's API token.
+     * @param $user
+     * @return string
+     */
+    public function createToken($user): string
+    {
+        $token = Str::random(60);
+
+        $user->forceFill([
+            'api_token' => hash('sha256', $token),
+        ])->save();
+
+        return $token;
     }
 }

@@ -82,4 +82,19 @@ class User extends Authenticatable
 
         return '';
     }
+
+    public static function checkIfLoginValid($username, $password)
+    {
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            return 'No such user';
+        }
+
+        if (!password_verify($password, $user->password)) {
+            return 'Wrong password';
+        }
+
+        return $user;
+    }
 }
