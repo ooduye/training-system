@@ -7,13 +7,31 @@ use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group  User management
+ *
+ * APIs for managing users
+ */
 class PassportAuthController extends Controller
 {
     /**
      * Registration
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
+     *
+     *
+     * @bodyParam  name string required Name of the User.
+     * @bodyParam  email string required Email of the User.
+     * @bodyParam  password string required Password for the User.
+     * @bodyParam  username string required Username for the User.
+     * @bodyParam  profile_id int required The id of the profile. Example: 9
+     *
+     * @response  {
+     *  "message": 'create success',
+     * }
+     *
      */
     public function register(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -64,8 +82,13 @@ class PassportAuthController extends Controller
 
     /**
      * Login
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @bodyParam  username string required Username for the User.
+     * @bodyParam  password string required Password for the User.
+     *
      */
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -85,8 +108,14 @@ class PassportAuthController extends Controller
 
     /**
      * Logout
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * @response  {
+     *  "message": 'create success',
+     * }
+     *
      */
     public function logout(Request $request): \Illuminate\Http\JsonResponse
     {

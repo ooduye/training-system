@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
+/**
+ * @group  Skill management
+ *
+ * APIs for managing skills
+ */
 class SkillController extends Controller
 {
-    public function index()
+    /**
+     * Get all the Skills
+     *
+     * @transformerModel  App\Models\Skill
+     */
+    public function index(): \Illuminate\Http\JsonResponse
     {
         $skills = Skill::all();
 

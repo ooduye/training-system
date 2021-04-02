@@ -10,9 +10,25 @@ use App\Transformers\Skill\ExtendedSkillTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group  Activities management
+ *
+ * APIs for managing activities
+ */
 class ActivityController extends Controller
 {
-    public function show($id)
+    /**
+     * Get all the activities for a Skill
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @urlParam  id required The ID of the Skill.
+     *
+     * @transformercollection  App\Transformers\Skill\ExtendedSkillTransformer
+     * @transformerModel  App\Models\Skill
+     */
+    public function show($id): \Illuminate\Http\JsonResponse
     {
         $skill = Skill::find($id);
 
@@ -27,7 +43,25 @@ class ActivityController extends Controller
         ], 200);
     }
 
-    public function store(Request $request)
+    /**
+     * Create an activity
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @bodyParam  skill_id int required The id of the skill. Example: 9
+     * @bodyParam  title string required Title of the activity.
+     * @bodyParam  description string required Description of the activity.
+     * @bodyParam  start_date datetime required Start time of the activity.
+     * @bodyParam  end_date datetime required End time of the activity.
+     * @bodyParam  participants array required Array of IDs of users to participate in activity.
+     *
+     * @response  {
+     *  "message": 'create success',
+     * }
+     *
+     */
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'skill_id' => 'required|exists:skills,id',
@@ -66,7 +100,21 @@ class ActivityController extends Controller
             ], 422);
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update an activity
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @urlParam  id required The ID of the Skill.
+     *
+     * @response  {
+     *  "message": 'update success',
+     * }
+     *
+     */
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $activity = Activity::find($id);
 
@@ -90,7 +138,19 @@ class ActivityController extends Controller
             ], 422);
     }
 
-    public function destroy($id)
+    /**
+     * Delete an activity
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @urlParam  id required The ID of the Skill.
+     *
+     * @response  {
+     *  "message": 'update success',
+     * }
+     */
+    public function destroy($id): \Illuminate\Http\JsonResponse
     {
         $activity = Activity::find($id);
 
