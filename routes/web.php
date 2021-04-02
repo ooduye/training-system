@@ -15,4 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+//AUTH
+
+Route::any('login', [\App\Http\Controllers\TrainingController::class, 'login'])->name('login')->middleware('auth.hastoken');
+
+Route::get('logout', [\App\Http\Controllers\TrainingController::class, 'logout'])->name('logout');
+
+Route::get('skills', [\App\Http\Controllers\TrainingController::class, 'getAllSkills'])->name('skills');
+
+Route::get('skill/{skill_id}', [\App\Http\Controllers\TrainingController::class, 'getSkillActivities'])->name('skill');
+
+

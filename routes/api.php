@@ -33,6 +33,6 @@ Route::prefix('v1/')->group(function () {
 
     Route::middleware(['auth.loggedin'])->group(function () {
         Route::get('activities/{skill_id}', [ActivityController::class, 'show']);
-        Route::resource('skill', SkillController::class);
+        Route::resource('skills', SkillController::class);
     });
 });

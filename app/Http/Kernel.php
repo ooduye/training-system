@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'auth.board' => \App\Http\Middleware\BoardUser::class,
         'auth.expert' => \App\Http\Middleware\ExpertUser::class,
         'auth.loggedin' => \App\Http\Middleware\LoggedInUser::class,
+        'auth.hastoken' => \App\Http\Middleware\HasToken::class,
     ];
 }
